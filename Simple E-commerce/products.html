@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore our range of premium gadgets at Saraki.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Products | Saraki Store</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
+                <img src="images/saraki.png" alt="Saraki Store logo" style="height:28px; width:28px; object-fit:cover; border-radius:50%;">
+                <span>Saraki Store</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Section -->
+    <main class="flex-grow-1 py-5">
+        <div class="container">
+            <header class="text-center mb-5">
+                <h1 class="fw-bold text-white">Our Collection</h1>
+                <p class="text-white-50">High-quality gadgets selected just for you.</p>
+            </header>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <!-- Product Card 1 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR H1.jpg" class="card-img-top" alt="Pro Smartphone">
+                        <div class="card-body">
+                            <h5 class="card-title">POEDAGAR H1</h5>
+                            <p class="card-text text-primary fw-bold">$79.99</p>
+
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+                               onclick="saveProductToCart('POEDAGAR H1','./images/products/POEDAGAR H1.jpg',79.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR O2.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">POEDAGAR O2</h5>
+                            <p class="card-text text-primary fw-bold">$89.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+                            onclick="saveProductToCart('POEDAGAR O2','./images/products/POEDAGAR O2.jpg',89.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR O3.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR O3</h5>
+                            <p class="card-text text-primary fw-bold">$84.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+                               onclick="saveProductToCart('POEDAGAR O3','./images/products/POEDAGAR O3.jpg',84.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 4 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR O1.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR O1</h5>
+                            <p class="card-text text-primary fw-bold">$89.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+                               onclick="saveProductToCart('POEDAGAR O1','./images/products/POEDAGA O1.jpg',89.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 5 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR 613.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR 613</h5>
+                            <p class="card-text text-primary fw-bold">$88.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR 613','./images/products/POEDAGAR 613.jpg',88.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 6 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR 836.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR 836</h5>
+                            <p class="card-text text-primary fw-bold">$89.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR 836','./images/products/POEDAGAR 836.jpg',89.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 7 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR 850.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR 850</h5>
+                            <p class="card-text text-primary fw-bold">$94.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR 850','./images/products/POEDAGAR 850.jpg',94.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 8 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR E10.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR E10</h5>
+                            <p class="card-text text-primary fw-bold">$99.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR E10','./images/products/POEDAGAR E10.jpg',99.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 9 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR E19.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR E19</h5>
+                            <p class="card-text text-primary fw-bold">$104.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR E19','./images/products/POEDAGAR E19.jpg',104.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 10 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR E24.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR E24</h5>
+                            <p class="card-text text-primary fw-bold">$88.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR E24','./images/products/POEDAGAR E24.jpg',88.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 11 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR A1.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR A1</h5>
+                            <p class="card-text text-primary fw-bold">$96.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR A1','./images/products/POEDAGAR A1.jpg',96.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 12 -->
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="./images/products/POEDAGAR A40.jpg" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                <h5 class="card-title">POEDAGAR A40</h5>
+                            <p class="card-text text-primary fw-bold">$99.99</p>
+                            <a href="details.html" class="btn btn-outline-primary w-100"
+onclick="saveProductToCart('POEDAGAR A40','./images/products/POEDAGAR A40.jpg',99.99)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-auto">
+        <div class="container text-center">
+            <p class="mb-0">&copy; <span id="year"></span> Saraki. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // used by products cards to put the clicked product into localStorage (for details.html)
+        function saveProductToCart(name, image, price) {
+            const product = {
+                name,
+                image,
+                price: parseFloat(price)
+            };
+            localStorage.setItem('cartItem', JSON.stringify(product));
+        }
+
+
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
+

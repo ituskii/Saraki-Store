@@ -1,0 +1,120 @@
+/* Custom Variables */
+:root {
+    --bg-dark: #0b0e14;        /* Very deep, rich black-blue */
+    --bg-card: #161b22;        /* Slightly lighter for cards */
+    --text-main: #e6edf3;       /* Soft white/grey for readability */
+    --text-muted: #8b949e;
+    --primary: #58a6ff;        /* Electric blue accent */
+    --accent: #238636;         /* Success green */
+}
+
+body {
+    background: radial-gradient(circle at top right, #0a0d27, #0b0e14);
+    background-attachment: fixed; /* Keeps the gradient nice as you scroll */
+}
+
+/* Navbar */
+.navbar {
+    background-color: #010409 !important;
+    border-bottom: 1px solid #30363d;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(180deg, #1c2128 0%, #0b0e14 100%);
+    padding: 80px 0;
+    border-bottom: 1px solid #30363d;
+}
+
+/* Ensure sections/buttons don't cause unexpected overflow and keep layout responsive */
+section.container,
+header.py-5 {
+    width: 100%;
+}
+
+h2, h3, .card-title {
+    color: #ffffff !important; 
+}
+
+.text-muted {
+    color: #a0aec0 !important; /* Lighter grey for better readability */
+}
+/* Cards - Modern Dark Theme */
+.card {
+    background-color: #1c2128; /* Slightly lighter than page bg */
+    border: 1px solid #30363d;
+    border-radius: 20px; /* More rounded corners look modern */
+    padding: 2rem !important;
+
+    /* Professional feel */
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+
+/* Make category-card images fit nicely (crop consistently) */
+.card > img.category-card-img,
+.card-img-top {
+    width: 100%;
+height: 380px; /* bigger image so the Trending cards look larger */
+
+
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+
+/* Ensure the card contents align and the card height matches its children */
+.card.h-100 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Keep spacing predictable for the category cards */
+.card.h-100 .mt-auto {
+    margin-top: auto !important;
+}
+
+
+
+/* Prevent image overflow so it visually matches the rounded card area */
+.card {
+    overflow: hidden;
+}
+
+.card:hover {
+    background-color: #232a33; /* Lighten on hover */
+    transform: translateY(-6px);
+    border-color: rgba(88, 166, 255, 0.9);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+}
+
+
+.card-title, .card-text {
+    color: var(--text-main);
+}
+
+/* Text Overrides for Dark Mode */
+.text-muted { color: var(--text-muted) !important; }
+.text-primary { color: var(--primary) !important; }
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary);
+    border: none;
+    color: #ffffff;
+}
+
+.btn-success {
+    background-color: var(--accent);
+    border: none;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #010409;
+    border-top: 1px solid #30363d;
+    color: var(--text-muted);
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Details | Saraki Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background-color:#0b0e14; }
+    .product-img { width: 100%; max-width: 520px; border-radius: 15px; }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
+        <img src="images/saraki.png" alt="Saraki Store logo" style="height:28px; width:28px; object-fit:cover; border-radius:50%;">
+        <span>Saraki Store</span>
+      </a>
+      <div class="ms-auto">
+        <a class="btn btn-outline-primary" href="cart.html">Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow-1 d-flex align-items-center">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6 text-center">
+          <img id="productImage" src="" alt="Product" class="product-img shadow-lg" />
+        </div>
+
+        <div class="col-lg-6">
+          <h1 id="productName" class="text-white fw-bold mb-2">Loading...</h1>
+          <div id="productPrice" class="text-primary fw-bold fs-3 mb-3">$0.00</div>
+
+          <p id="productDescription" class="text-white-50 mb-4">
+            Select a product from <b>Products</b>.
+          </p>
+
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-lg shadow-sm" type="button" onclick="addToCart()">Add to Cart</button>
+            <a href="cart.html" class="btn btn-outline-primary btn-lg">Go to Cart</a>
+            <a href="products.html" class="btn btn-link text-white-50">Back to Products</a>
+          </div>
+
+          <div id="msg" class="alert alert-success mt-3 mb-0" style="display:none;">Added to cart.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white py-4 mt-auto site-footer">
+    <div class="container text-center">
+      <p class="mb-0">&copy; <span id="year"></span> Saraki. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // products.html sets this key when you click View Details
+    // (debug note: if this is wrong, details will always show fallback)
+    const product = JSON.parse(localStorage.getItem('cartItem') || 'null');
+
+    // Helpful fallback: if cartItem is missing, do not show random stale UI
+    // Prefer clearing description to avoid confusion.
+
+
+    const productName = document.getElementById('productName');
+    const productPrice = document.getElementById('productPrice');
+    const productImage = document.getElementById('productImage');
+    const productDescription = document.getElementById('productDescription');
+    const msg = document.getElementById('msg');
+
+    function money(n){
+      return `$${Number(n || 0).toFixed(2)}`;
+    }
+
+    if (product && product.name) {
+      productName.textContent = product.name;
+      productPrice.textContent = money(product.price);
+      productImage.src = product.image || '';
+      productImage.alt = product.name;
+
+      // description based on product name (set in products.html)
+      const name = String(product.name || '');
+      const descriptions = {
+'POEDAGAR H1': 'The Royal King collection features a precision Japanese Quartz movement for accurate timekeeping, a polished premium chain design, and a scratch-resistant mineral glass finish. With 3 ATM water resistance, it’s built to handle everyday splashes while maintaining a clean, luxury look for formal or casual wear.',
+        'POEDAGAR O1': 'POEDAGAR O1 is built for comfort and everyday reliability, featuring a refined minimalist look with a modern slim profile designed for smooth daily wear. Premium materials support durability and a confident feel, while the carefully made build helps the watch stay stylish in both office and off-duty settings.',
+        'POEDAGAR O3': 'POEDAGAR O3 delivers a sleek smart-watch experience with smooth performance and an easy-to-read display. Built for everyday reliability, it’s designed to fit your routine comfortably while offering a modern wearable experience you can trust day after day.',
+        'POEDAGAR O2': 'POEDAGAR O2 is built for durability and everyday reliability, featuring a robust design that stands up to the demands of active lifestyles. Its sleek appearance and dependable performance make it a great choice for those who want a watch that can keep up with their busy schedule.',
+        'POEDAGAR 613': 'POEDAGAR 613 is crafted for style and function, combining a refined look with reliable everyday performance. Its balanced design supports long-term comfort while delivering consistent operation for daily use—ideal for users who want dependable quality.',
+        'POEDAGAR 836': 'POEDAGAR 836 features premium finishing and dependable engineering designed to keep up with your routine. The refined structure and smooth experience make it a strong choice for everyday wear, offering stability, comfort, and a quality-focused design.',
+        'POEDAGAR 850': 'POEDAGAR 850 delivers a luxury-inspired look with solid durability and a smooth user experience. Built to feel premium on the wrist and perform reliably throughout the day, it’s a great option when you want both elegance and everyday strength.',
+        'POEDAGAR E10': 'POEDAGAR E10 focuses on comfort and clarity, helping you stay connected during long hours. With an accessible, everyday-friendly design and dependable performance, it’s built for users who want a watch that’s easy to wear and simple to use.',
+        'POEDAGAR E19': 'POEDAGAR E19 is designed for users who want premium build quality and reliable performance with a modern aesthetic. The carefully finished look supports confident daily styling, while the dependable engineering helps keep everything consistent over time.',
+        'POEDAGAR E24': 'POEDAGAR E24 blends elegant design with practical functionality for daily monitoring. It’s built to provide convenience and clarity during everyday use, with a polished appearance that fits seamlessly into both work and lifestyle.',
+        'POEDAGAR A1': 'POEDAGAR A1 provides a refined look with high-quality finishing and consistent performance for everyday wear. It’s designed to feel comfortable throughout the day and deliver reliable functionality—perfect for users who prefer understated premium quality.',
+        'POEDAGAR A40': 'POEDAGAR A40 is a premium watch option with a stylish build and dependable performance engineered for daily use. Built for durability and everyday reliability, it offers a clean premium look while supporting smooth, long-term performance that matches your schedule.'
+      };
+
+      if (descriptions[name]) {
+        productDescription.textContent = descriptions[name];
+      } else {
+        productDescription.textContent = 'High-quality design crafted for performance and long-term use.';
+      }
+    } else {
+      productName.textContent = 'No product selected';
+      productPrice.textContent = '$0.00';
+      productDescription.textContent = 'Please select a product from the Products page.';
+      productImage.src = '';
+    }
+
+    function addToCart(){
+      if (!product || !product.name) return;
+
+      const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+      const idx = cartItems.findIndex(i => i.name === product.name);
+
+      if (idx >= 0) cartItems[idx].qty = (cartItems[idx].qty || 1) + 1;
+      else cartItems.push({ name: product.name, image: product.image, price: Number(product.price || 0), qty: 1 });
+
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      localStorage.removeItem('cartItem');
+
+
+      msg.style.display = 'block';
+      setTimeout(() => { msg.style.display = 'none'; }, 1200);
+    }
+  </script>
+</body>
+</html>
+

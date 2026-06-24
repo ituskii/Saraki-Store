@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Saraki Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { --bg: #050505; --surface: #111111; --primary: #3fb950; --border: #222; --text-main: #ffffff; --text-muted: #e0e0e0; }
+        
+        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', sans-serif; }
+        
+        .checkout-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+        .sidebar-summary { background: #0a0a0a; border-left: 1px solid var(--border); }
+        
+        h2, h5, .text-secondary { color: var(--text-main) !important; font-weight: 600; }
+        
+        .form-control { background: #0a0a0a; border: 1px solid var(--border); color: #ffffff !important; padding: 0.75rem; }
+        .form-control::placeholder { color: #aaaaaa; }
+        .form-control:focus { background: #0a0a0a; border-color: var(--primary); box-shadow: none; }
+        
+        .payment-option { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; cursor: pointer; transition: 0.3s; color: var(--text-main); }
+        .payment-option:hover { border-color: #444; }
+        input[type="radio"]:checked + .payment-option { border-color: var(--primary); background: #0a1a0c; }
+        
+        .btn-checkout { background: var(--primary); color: #000; font-weight: 800; border: none; padding: 1rem; border-radius: 12px; }
+        .qr-card { background: #fff; padding: 1.5rem; border-radius: 16px; margin: 1rem auto; width: fit-content; }
+        .text-muted { color: var(--text-muted) !important; }
+    </style>
+</head>
+<body class="py-5">
+
+<div class="container" style="max-width: 1000px;">
+    <h2 class="mb-4">Secure Checkout</h2>
+    <div class="row checkout-box">
+        <!-- Left: Details -->
+        <div class="col-lg-7 p-4">
+            <h5 class="mb-3">1. Shipping Details</h5>
+            <input type="text" class="form-control mb-2" placeholder="Full Name">
+            <input type="email" class="form-control mb-2" placeholder="Email Address">
+            <textarea class="form-control mb-4" placeholder="Full Delivery Address" rows="2"></textarea>
+
+            <h5 class="mb-3">2. Payment Method</h5>
+            <div class="d-flex gap-3 mb-4">
+                <input type="radio" name="pay" id="aba" class="d-none" value="ABA" checked>
+                <label for="aba" class="payment-option flex-grow-1 text-center">
+                    <img src="../Simple E-commerce/images/aba.png" style="height:30px; object-fit:contain;" alt="ABA Bank">
+                    <br>
+                    <small>ABA Bank</small>
+                </label>
+                <input type="radio" name="pay" id="ac" class="d-none" value="ACLEDA">
+                <label for="ac" class="payment-option flex-grow-1 text-center">
+                    <img src="../Simple E-commerce/images/acleda.jpg" style="height:30px; object-fit:contain;" alt="ACLEDA">
+                    <br>
+                    <small>ACLEDA</small>
+                </label>
+            </div>
+            
+            <div class="text-center">
+                <div class="qr-card">
+                    <img id="qr-aba" src="../Simple E-commerce/images/aba_qr.png" style="width:140px; display:block;" alt="ABA QR" />
+                    <img id="qr-acleda" src="../Simple E-commerce/images/acleda_qr.png" style="width:140px; display:none;" alt="ACLEDA QR" />
+                </div>
+                <small class="text-muted">Scan with your banking app to pay</small>
+            </div>
+        </div>
+
+        <!-- Right: Summary -->
+        <div class="col-lg-5 p-4 sidebar-summary">
+            <h5 class="mb-4">Order Summary</h5>
+            <div id="itemsList" class="mb-4"></div>
+            <div class="d-flex justify-content-between fs-4 fw-bold border-top border-secondary pt-3">
+                <span>Total</span>
+                <span id="totalText" class="text-success">$0.00</span>
+            </div>
+            <button class="btn-checkout w-100 mt-3" id="submitBtn" onclick="confirmPay(event)">Confirm & Pay</button>
+            <a href="cart.html" class="btn btn-outline-secondary w-100 mt-4">Back to Cart</a>
+            <div class="text-center text-muted small mt-2" id="checkout-empty-hint" style="display:none;">Your cart is empty.</div>
+            <p class="text-center mt-3 text-muted small">🔒 SSL Encrypted & Secure</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const cart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+    
+    document.getElementById('totalText').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('itemsList').innerHTML = cart.map(i => `
+        <div class="d-flex justify-content-between mb-2 small">
+            <span>${i.qty}x ${i.name}</span>
+            <span>$${(i.price * i.qty).toFixed(2)}</span>
+        </div>
+    `).join('');
+
+    // If cart is empty, show hint and disable pay button
+    const checkoutEmptyHint = document.getElementById('checkout-empty-hint');
+    const submitBtn = document.getElementById('submitBtn');
+    const isEmpty = !Array.isArray(cart) || cart.length === 0 || total <= 0;
+    if (checkoutEmptyHint) checkoutEmptyHint.style.display = isEmpty ? 'block' : 'none';
+    if (submitBtn) submitBtn.disabled = isEmpty;
+
+
+    // Toggle QR visibility
+    function genQR() {
+        const b = document.querySelector('input[name="pay"]:checked').value;
+        const qrAba = document.getElementById('qr-aba');
+        const qrAcleda = document.getElementById('qr-acleda');
+
+        if (b === 'ABA') {
+            qrAba.style.display = 'block';
+            qrAcleda.style.display = 'none';
+        } else {
+            qrAba.style.display = 'none';
+            qrAcleda.style.display = 'block';
+        }
+    }
+    document.querySelectorAll('input[name="pay"]').forEach(r => r.addEventListener('change', genQR));
+
+    window.confirmPay = function(e) {
+        if (e && e.preventDefault) e.preventDefault();
+
+        // Prevent paying when cart is empty
+        if (!Array.isArray(cart) || cart.length === 0 || total <= 0) {
+            // keep user on checkout and let the UI hint + disabled button handle it
+            alert('Your cart is empty. Please add products before paying.');
+            window.location.href = 'cart.html';
+            return;
+        }
+
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('cartItem');
+
+        // Determine payment method from selected radio
+        const payMethod = document.querySelector('input[name="pay"]:checked')?.value || '—';
+
+        const receipt = {
+            orderId: `SARAKI-${Date.now()}`,
+            total: total,
+            payMethod: payMethod
+        };
+        localStorage.setItem('receiptData', JSON.stringify(receipt));
+
+        alert('Payment Successful!');
+        window.location.href = 'receipt.html';
+    };
+</script>
+</body>
+</html>

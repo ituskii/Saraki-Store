@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Saraki Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Ensures the cart card matches your global theme */
+        .cart-item-card {
+            background-color: #1c2128 !important;
+            border: 1px solid #30363d !important;
+            border-radius: 20px !important;
+            padding: 1.5rem !important;
+            transition: all 0.3s ease;
+        }
+
+        /* requested */
+        .summary-label {
+            color: #cbd5e1 !important; /* A nice light grey-blue */
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white min-vh-100 d-flex flex-column">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
+                <img src="images/saraki.png" alt="Saraki Store logo" style="height:28px; width:28px; object-fit:cover; border-radius:50%;">
+                <span>Saraki Store</span>
+            </a>
+            <div class="ms-auto">
+                <a class="btn btn-outline-primary" href="cart.html">Cart</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 flex-grow-1">
+
+        <h2 class="mb-4 text-white fw-bold">Your Shopping Cart</h2>
+
+        <div class="row g-4">
+            <div id="cart-items-list" class="col-lg-8">
+                <p id="empty-msg" class="text-muted">Your cart is currently empty.</p>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card p-4">
+                    <h4 class="mb-3 fw-bold text-white">Order Summary</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="text-muted">Total Amount</span>
+                        <strong id="total-price" class="text-primary fs-3">$0.00</strong>
+                    </div>
+                    <a href="checkout.html" id="checkout-btn" class="btn btn-primary w-100 btn-lg shadow-sm disabled">Proceed to Checkout</a>
+                    <a href="products.html" class="btn btn-outline-secondary w-100 mt-3">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    const cartItemsRaw = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    const savedProduct = JSON.parse(localStorage.getItem('cartItem'));
+
+    // Backward compatibility: if old single-item cartItem exists, convert it once.
+    // Prevent duplicates by only converting when cartItems is truly empty AND cartItem has a valid product.
+    if (savedProduct && savedProduct.name && Array.isArray(cartItemsRaw) && cartItemsRaw.length === 0) {
+        cartItemsRaw.push({ ...savedProduct, qty: 1 });
+        localStorage.setItem('cartItems', JSON.stringify(cartItemsRaw));
+        localStorage.removeItem('cartItem');
+    }
+
+    const cartList = document.getElementById('cart-items-list');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    if (cartItemsRaw.length > 0) {
+        document.getElementById('empty-msg').style.display = 'none';
+        if(checkoutBtn) checkoutBtn.classList.remove('disabled');
+
+        const total = cartItemsRaw.reduce((sum, item) => sum + parseFloat(item.price) * (item.qty || 1), 0);
+
+        cartList.innerHTML = cartItemsRaw.map(item => `
+            <div class="cart-item-card d-flex align-items-center gap-4 mb-3">
+                <img src="${item.image}" 
+                     style="width: 120px; height: 120px; object-fit: cover; border-radius: 12px;" 
+                     alt="Product Image">
+                <div class="flex-grow-1">
+                    <h5 class="text-white mb-1">${item.name}</h5>
+                    <p class="text-primary fw-bold fs-5 mb-2">
+                        $${parseFloat(item.price).toFixed(2)}
+                        <span class="text-white-50 fw-normal">x${item.qty || 1}</span>
+                    </p>
+                    <p class="text-muted mb-3">Subtotal: <span class="text-primary fw-bold">$${(parseFloat(item.price) * (item.qty || 1)).toFixed(2)}</span></p>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-outline-danger px-3" onclick="removeOne('${item.name}')">Remove</button>
+                </div>
+            </div>
+        `).join('');
+
+        document.getElementById('total-price').textContent = `$${total.toFixed(2)}`;
+    }
+
+
+    function removeOne(name) {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        const idx = cartItems.findIndex(i => i.name === name);
+        if (idx < 0) return;
+
+        cartItems[idx].qty = (cartItems[idx].qty || 1) - 1;
+        if (cartItems[idx].qty <= 0) {
+            cartItems.splice(idx, 1);
+        }
+
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        // keep single-item compat cleaned
+        localStorage.removeItem('cartItem');
+        location.reload();
+    }
+
+    function clearCart() {
+        localStorage.removeItem('cartItems');
+        localStorage.removeItem('cartItem');
+        location.reload();
+    }
+
+</script>
+</body>
+</html>
